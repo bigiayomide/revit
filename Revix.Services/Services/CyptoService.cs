@@ -1,15 +1,25 @@
-﻿using Revix.Models;
+﻿using AutoMapper;
+using Revix.Data.Interfaces;
+using Revix.Data.IRepositories;
+using Revix.Models;
 using Revix.Services.Contracts;
 using System.Threading.Tasks;
 
 namespace Revix.Services.Services
 {
-    public class CyptoService : ICryptoService
+    public class CryptoService : ICryptoService
     {
         private readonly ICoinMarketCapService _coinMarketCapService;
-        public CyptoService(ICoinMarketCapService coinMarketCapService)
+        private readonly ICryptoListingRepo _crytoListingRepo;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+        public CryptoService(IMapper mapper, IUnitOfWork unitOfWork, ICoinMarketCapService coinMarketCapService,
+        ICryptoListingRepo crytoListingRepo)
         {
             _coinMarketCapService = coinMarketCapService;
+            _crytoListingRepo = crytoListingRepo;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<CryptoListingVM> GetandSaveCryptoData(CryptoListingSortDataVM cryptoListingSort)
@@ -22,11 +32,9 @@ namespace Revix.Services.Services
 
         public async Task SaveCryptoData(CryptoListingVM cryptoListing)
         {
-            //TODO: Check if data exists
-            // if exists update 
-            // if not exists create
-
-            throw new System.NotImplementedException();
+            var entity = _mapper.Map<CryptoListing>(cryptoListing);
+            _crytoListingRepo.Add(entity);
+            await _unitOfWork.CommitAsync();
         }
     }
 }

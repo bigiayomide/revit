@@ -1,17 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Revix.Models;
+using Revix.Services.Contracts;
+using Revix.Services.Services;
 using System.Threading.Tasks;
 
 namespace Revix.Controllers
 {
+    [ApiController]
+    [Route("crypto/listing")]
     public class MarketController : ControllerBase
     {
-        public MarketController()
+        private readonly ICryptoService _service;
+        public MarketController(ICryptoService service)
         {
-
+            _service = service;
         }
-        public IActionResult GetCrytoMarketData()
+
+        [HttpGet]
+        public async Task<IActionResult> GetCrytoMarketData([FromQuery] CryptoListingSortDataVM cryptoListingSort)
         {
-            return Ok();
+            return Ok(await _service.GetandSaveCryptoData(cryptoListingSort));
         }
     }
 }

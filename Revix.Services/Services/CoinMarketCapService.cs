@@ -7,9 +7,10 @@ namespace Revix.Services.Services
 {
     public class CoinMarketCapService : ICoinMarketCapService
     {
-        public Task<CryptoListingVM> GetCryptoRates([Query] CryptoListingSortDataVM sortdata)
+        private ICoinMarketCapService _client;
+        public async Task<CryptoListingVM> GetCryptoRates([Query] CryptoListingSortDataVM sortdata)
         {
-            throw new System.NotImplementedException();
+            return await _client.GetCryptoRates(sortdata);
         }
     }
 }

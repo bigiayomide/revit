@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Refit;
+using Revix.Extentions;
+using Revix.Models;
 using Revix.Services.Contracts;
 using System;
 
@@ -35,6 +37,14 @@ namespace Revix
                     c.BaseAddress = new Uri(Configuration["MARKET-URL"]);
                     c.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", Configuration["MARKET-API-KEY"]);
                 });
+
+
+
+            services
+            .AddAutoMapper(typeof(DomainProfile))
+                .AddDatabase(Configuration)
+                .AddRepositories()
+                .AddServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
