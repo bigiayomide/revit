@@ -6,7 +6,10 @@ namespace Revix.Models
     {
         public DomainProfile()
         {
-            CreateMap<CryptoListing, CryptoListingVM>().ReverseMap();
+            CreateMap<CryptoListing, CoinData>().ReverseMap()
+            .ForMember(dto => dto.LastUpdatedPrice, conf => conf.MapFrom(entity => entity.Quote.USD.LastUpdated))
+            .ForMember(dto => dto.Price, conf => conf.MapFrom(entity => entity.Quote.USD.Price))
+            .ForMember(dto => dto.MarketCap, conf => conf.MapFrom(entity => entity.Quote.USD.MarketCap));
         }
 
     }

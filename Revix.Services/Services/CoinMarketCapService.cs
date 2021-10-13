@@ -12,5 +12,11 @@ namespace Revix.Services.Services
         {
             return await _client.GetCryptoRates(sortdata);
         }
+
+
+        public async Task<string> GetCryptoRatetest([Query] CryptoListingSortDataVM sortdata)
+        {
+            return await _client.GetCryptoRatetest(sortdata);
+        }
     }
 }

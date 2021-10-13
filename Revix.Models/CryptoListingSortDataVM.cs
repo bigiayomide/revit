@@ -1,19 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using Refit;
 
 namespace Revix.Models
 {
     public class CryptoListingSortDataVM
     {
-        [JsonProperty(PropertyName = "start")]
+        [AliasAs("start")]
         public int Start { get; set; }
-
-        [JsonProperty(PropertyName = "limit")]
+        [AliasAs("limit")]
         public int Limit { get; set; }
-
-        [JsonProperty(PropertyName = "price_min")]
-        public long PriceMin { get; set; }
-
-        [JsonProperty(PropertyName = "price_max")]
-        public long PriceMax { get; set; }
+        [AliasAs("convert")]
+        public string Convert { get; set; }
     }
 }

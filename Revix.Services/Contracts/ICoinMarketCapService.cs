@@ -8,5 +8,8 @@ namespace Revix.Services.Contracts
     {
         [Get("/v1/cryptocurrency/listings/latest")]
         Task<CryptoListingVM> GetCryptoRates([Query] CryptoListingSortDataVM sortdata);
+
+        [Get("/v1/cryptocurrency/listings/latest")]
+        Task<string> GetCryptoRatetest([Query] CryptoListingSortDataVM sortdata);
     }
 }

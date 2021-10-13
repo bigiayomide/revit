@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Refit;
 using Revix.Extentions;
+using Revix.Filters;
 using Revix.Models;
 using Revix.Services.Contracts;
 using System;
@@ -25,7 +26,10 @@ namespace Revix
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(options =>
+                {
+                    options.Filters.Add(options.Filters.Add(typeof(HttpGlobalExceptionFilter)));
+                });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Revix", Version = "v1" });
@@ -36,6 +40,7 @@ namespace Revix
                 {
                     c.BaseAddress = new Uri(Configuration["MARKET-URL"]);
                     c.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", Configuration["MARKET-API-KEY"]);
+
                 });
 
 
