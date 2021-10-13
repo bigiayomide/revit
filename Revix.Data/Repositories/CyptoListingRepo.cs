@@ -1,9 +1,9 @@
 using Revix.Data.IRepositories;
-using Revix.Models;
+using Revix.Data.Entities;
 
 namespace Revix.Data.Repositories
 {
-    public class CryptoListingRepo : Repository<CryptoListing>, ICryptoListingRepo
+    public class CryptoListingRepo : Repository<Revix.Data.Entities.CryptoListing>, ICryptoListingRepo
     {
         public CryptoListingRepo(DbFactory dbFactory) : base(dbFactory)
         {

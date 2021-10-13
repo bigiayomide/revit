@@ -27,9 +27,11 @@ namespace Revix
         {
 
             services.AddControllers(options =>
-                {
-                    options.Filters.Add(options.Filters.Add(typeof(HttpGlobalExceptionFilter)));
-                });
+            {
+                options.Filters.Add(options.Filters.Add(typeof(HttpGlobalExceptionFilter)));
+            });
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Revix", Version = "v1" });

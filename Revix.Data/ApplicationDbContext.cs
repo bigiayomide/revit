@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Revix.Models;
-
+using Revix.Data.Entities;
 namespace Revix.Data
 {
     public class ApplicationDbContext : DbContext

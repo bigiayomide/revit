@@ -3,11 +3,9 @@ using Revix.Data.Interfaces;
 using Revix.Data.IRepositories;
 using Revix.Models;
 using Revix.Services.Contracts;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Revix.Data.Entities;
 
 namespace Revix.Services.Services
 {
@@ -29,26 +27,31 @@ namespace Revix.Services.Services
         public async Task<CryptoListingVM> GetandSaveCryptoData(CryptoListingSortDataVM cryptoListingSort)
         {
             var data = await _coinMarketCapService.GetCryptoRates(cryptoListingSort);
+            if (data.Status.ErrorMessage != null)
+                throw new GlobalException(data.Status.ErrorMessage.ToString());
             await SaveCryptoData(data);
             return data;
         }
 
         public async Task SaveCryptoData(CryptoListingVM cryptoListing)
         {
-            var entity = _mapper.Map<List<CryptoListing>>(cryptoListing.Data);
-            foreach (var item in entity)
+            foreach (var item in cryptoListing.Data)
             {
-                var getlisting = _crytoListingRepo.List(x => x.Id == item.Id).FirstOrDefault();
-
-                if (getlisting != null && (getlisting.LastUpdated < item.LastUpdated || getlisting.LastUpdatedPrice < item.LastUpdatedPrice))
+                var getlistings = _crytoListingRepo.List(x => x.Id == item.CoinDataId);
+                var getlisting = getlistings.FirstOrDefault();
+                if (getlisting != null && (item.LastUpdated > getlisting.LastUpdated || item.Quote.USD.LastUpdated > getlisting.LastUpdatedPrice))
                 {
-                    _crytoListingRepo.Update(item);
+                    var entitytoUpdate = _mapper.Map(item, getlisting);
+                    _crytoListingRepo.Update(entitytoUpdate);
+                    await _unitOfWork.CommitAsync();
                 }
                 else if (getlisting == null)
-                    _crytoListingRepo.Add(item);
+                {
+                    var entitytoAdd = _mapper.Map<CryptoListing>(item);
+                    _crytoListingRepo.Add(entitytoAdd);
+                    await _unitOfWork.CommitAsync();
+                }
             }
-
-            await _unitOfWork.CommitAsync();
         }
     }
 }

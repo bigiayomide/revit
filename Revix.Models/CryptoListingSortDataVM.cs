@@ -11,6 +11,6 @@ namespace Revix.Models
         [AliasAs("limit")]
         public int Limit { get; set; }
         [AliasAs("convert")]
-        public string Convert { get; set; }
+        public string Convert { get; } = "USD";
     }
 }

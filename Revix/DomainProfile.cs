@@ -1,6 +1,8 @@
 using AutoMapper;
+using Revix.Data.Entities;
+using Revix.Models;
 
-namespace Revix.Models
+namespace Revix
 {
     public class DomainProfile : Profile
     {

@@ -45,7 +45,7 @@ namespace Revix.Data
 
         public IQueryable<T> List(Expression<Func<T, bool>> expression)
         {
-            return DbSet.Where(expression);
+            return DbSet.AsNoTracking().Where(expression);
         }
 
         public void Update(T entity)

@@ -7,7 +7,7 @@ namespace Revix.Models
     public class Status
     {
         [JsonPropertyName("timestamp")]
-        public DateTime Timestamp { get; set; }
+        public DateTime? Timestamp { get; set; }
 
         [JsonPropertyName("error_code")]
         public int ErrorCode { get; set; }
@@ -16,16 +16,16 @@ namespace Revix.Models
         public object ErrorMessage { get; set; }
 
         [JsonPropertyName("elapsed")]
-        public int Elapsed { get; set; }
+        public long Elapsed { get; set; }
 
         [JsonPropertyName("credit_count")]
-        public int CreditCount { get; set; }
+        public long CreditCount { get; set; }
 
         [JsonPropertyName("notice")]
         public object Notice { get; set; }
 
         [JsonPropertyName("total_count")]
-        public int TotalCount { get; set; }
+        public long TotalCount { get; set; }
     }
 
     public class USD
@@ -37,7 +37,7 @@ namespace Revix.Models
         public double MarketCap { get; set; }
 
         [JsonPropertyName("last_updated")]
-        public DateTime LastUpdated { get; set; }
+        public DateTime? LastUpdated { get; set; }
     }
 
     public class Quote
@@ -49,7 +49,7 @@ namespace Revix.Models
     public class CoinData
     {
         [JsonPropertyName("id")]
-        public int Id { get; set; }
+        public long CoinDataId { get; set; }
 
         [JsonPropertyName("name")]
         public string Name { get; set; }
@@ -61,13 +61,13 @@ namespace Revix.Models
         public string Slug { get; set; }
 
         [JsonPropertyName("num_market_pairs")]
-        public int NumMarketPairs { get; set; }
+        public long NumMarketPairs { get; set; }
 
         [JsonPropertyName("total_supply")]
-        public int TotalSupply { get; set; }
+        public long TotalSupply { get; set; }
 
         [JsonPropertyName("last_updated")]
-        public DateTime LastUpdated { get; set; }
+        public DateTime? LastUpdated { get; set; }
 
         [JsonPropertyName("quote")]
         public Quote Quote { get; set; }

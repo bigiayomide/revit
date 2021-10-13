@@ -1,5 +1,5 @@
 using Revix.Data.Interfaces;
-using Revix.Models;
+using Revix.Data.Entities;
 
 namespace Revix.Data.IRepositories
 {
